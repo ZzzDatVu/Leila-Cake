@@ -1,0 +1,246 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Leila Cake - Tiệm Bánh Ngọt Tân Phú</title>
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: #fff5f8;
+            margin: 0;
+            padding: 20px;
+            color: #333;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        /* Nút giỏ hàng nổi góc phải */
+        .cart-float {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: #ff4d94;
+            color: white;
+            padding: 10px 18px;
+            border-radius: 25px;
+            text-decoration: none;
+            font-weight: bold;
+            z-index: 100;
+            box-shadow: 0 4px 10px rgba(255, 77, 148, 0.3);
+            transition: 0.2s;
+        }
+        .cart-float:hover {
+            background: #e6005c;
+            transform: translateY(-2px);
+        }
+
+        /* HEADER MÔ PHỎNG BIỂN HIỆU THỰC TẾ */
+        .store-signboard {
+            background: #ffb6c1;
+            border: 4px solid #ffffff;
+            border-radius: 20px;
+            text-align: center;
+            padding: 30px 20px 20px 20px;
+            box-shadow: 0 8px 25px rgba(255, 105, 180, 0.25);
+            margin-bottom: 20px;
+        }
+        .store-signboard h1 {
+            color: #ffffff;
+            font-family: 'Brush Script MT', cursive, sans-serif;
+            font-size: 46px;
+            margin: 10px 0 5px 0;
+            text-shadow: 2px 2px 4px rgba(216, 67, 112, 0.4);
+            letter-spacing: 1px;
+        }
+        .store-signboard .slogan {
+            color: #fff;
+            font-size: 14px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            margin-bottom: 15px;
+            text-shadow: 1px 1px 2px rgba(0,0,0,0.1);
+        }
+        .store-signboard .info-footer {
+            border-top: 1px dashed rgba(255, 255, 255, 0.6);
+            padding-top: 12px;
+            margin-top: 15px;
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            flex-wrap: wrap;
+            font-size: 13px;
+            color: #ffffff;
+            font-weight: 500;
+        }
+
+        /* Thanh menu phụ trợ */
+        .sub-menu {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+        .sub-menu a {
+            background: white;
+            color: #d84370;
+            border: 1px solid #ffd6df;
+            padding: 8px 18px;
+            border-radius: 20px;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.03);
+            transition: 0.2s;
+        }
+        .sub-menu a:hover {
+            background: #fff0f3;
+        }
+
+        /* Tiêu đề danh mục bánh */
+        h2 {
+            color: #d84370;
+            font-size: 20px;
+            border-bottom: 2px solid #ffd6df;
+            padding-bottom: 8px;
+            margin-top: 40px;
+            margin-bottom: 20px;
+        }
+
+        /* Lưới sản phẩm */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(220px, 1fr));
+            gap: 20px;
+        }
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 15px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+            transition: transform 0.2s, box-shadow 0.2s;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            border: 1px solid #fae1e8;
+        }
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 6px 16px rgba(216, 67, 112, 0.12);
+        }
+        .card img {
+            width: 100%;
+            height: 160px;
+            object-fit: cover;
+            border-radius: 8px;
+            background: #f9f9f9;
+        }
+        .card h3 {
+            font-size: 16px;
+            margin: 12px 0 8px 0;
+            color: #333;
+        }
+        .price {
+            color: #e6005c;
+            font-weight: bold;
+            font-size: 16px;
+            margin-bottom: 12px;
+        }
+        .btn-cart {
+            display: block;
+            text-align: center;
+            background: #ff4d94;
+            color: white;
+            padding: 8px 0;
+            text-decoration: none;
+            border-radius: 6px;
+            font-size: 14px;
+            font-weight: bold;
+            transition: background 0.2s;
+        }
+        .btn-cart:hover {
+            background: #e6005c;
+        }
+        .empty-text {
+            color: #8c6d75;
+            font-style: italic;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Nút giỏ hàng nổi góc phải -->
+    <a href="{% url 'cart_detail' %}" class="cart-float">🛒 Giỏ Hàng</a>
+
+    <div class="container">
+
+        <!-- HEADER MÔ PHỎNG BIỂN HIỆU NGOÀI ĐỜI THỰC -->
+        <div class="store-signboard">
+            <div style="font-size: 32px; margin-bottom: -5px;">🎂</div>
+            <h1>Leila Cake</h1>
+            <div class="slogan">❤️ Gói Trọn Yêu Thương Trong Từng Chiếc Bánh ❤️</div>
+
+            <div class="info-footer">
+                <span>📍 136 Thoại Ngọc Hầu, P.Phú Thọ Hòa, Tân Phú</span>
+                <span>📞 033 44 20 122</span>
+            </div>
+        </div>
+
+        <!-- Thanh menu phụ trợ -->
+        <div class="sub-menu">
+            <a href="{% url 'lookup_order' %}">🔍 Tra Cứu Trạng Thái Đơn Hàng</a>
+            <a href="https://zalo.me/0834420122" target="_blank">💬 Gửi Mẫu Thiết Kế Riêng (Zalo)</a>
+        </div>
+
+        <!-- Danh mục 1: Tủ Bánh Có Sẵn -->
+        <h2>⚡ Tủ Bánh Có Sẵn (Giao Ngay)</h2>
+        <div class="grid">
+            {% for p in ready_products %}
+                <div class="card">
+                    <div>
+                        {% if p.image %}
+                            <img src="{{ p.image.url }}" alt="{{ p.name }}">
+                        {% else %}
+                            <img src="https://via.placeholder.com/200" alt="No image">
+                        {% endif %}
+                        <h3>{{ p.name }}</h3>
+                    </div>
+                    <div>
+                        <div class="price">{{ p.price }} đ</div>
+                        <a href="{% url 'add_to_cart' p.id %}" class="btn-cart">🛒 Đặt Bánh</a>
+                    </div>
+                </div>
+            {% empty %}
+                <p class="empty-text">Tiệm đang cập nhật thêm bánh có sẵn ở tủ, bạn quay lại sau nhé!</p>
+            {% endfor %}
+        </div>
+
+        <!-- Danh mục 2: Bánh Đặt Riêng Custom -->
+        <h2>🎂 Bánh Sinh Nhật & Đặt Riêng (Custom)</h2>
+        <div class="grid">
+            {% for p in custom_products %}
+                <div class="card">
+                    <div>
+                        {% if p.image %}
+                            <img src="{{ p.image.url }}" alt="{{ p.name }}">
+                        {% else %}
+                            <img src="https://via.placeholder.com/200" alt="No image">
+                        {% endif %}
+                        <h3>{{ p.name }}</h3>
+                    </div>
+                    <div>
+                        <div class="price">{{ p.price }} đ</div>
+                        <a href="{% url 'add_to_cart' p.id %}" class="btn-cart">🛒 Đặt Bánh</a>
+                    </div>
+                </div>
+            {% empty %}
+                <p class="empty-text">Chưa có mẫu bánh trưng bày nào. Bạn có thể gửi mẫu riêng qua Zalo cho tiệm nhé!</p>
+            {% endfor %}
+        </div>
+    </div>
+</body>
+</html>

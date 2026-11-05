@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head><a href="{% url 'lookup_order' %}" class="lookup-float">🔍 Tra Cứu Đơn</a>
+    <meta charset="UTF-8">
+    <title>Tra Cứu Đơn Hàng - Leila Cake</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #fff5f8; padding: 30px; }
+        .box { max-width: 500px; margin: 0 auto; background: white; padding: 25px; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+        input[type="text"] { width: 70%; padding: 10px; border: 1px solid #ccc; border-radius: 4px; }
+        .btn { background: #ff4d94; color: white; border: none; padding: 10px 15px; border-radius: 4px; font-weight: bold; cursor: pointer; }
+        .result { margin-top: 20px; background: #fff0f5; padding: 15px; border-radius: 6px; }
+        .status { font-weight: bold; color: #e6005c; }
+    </style>
+</head>
+<body>
+    <div class="box">
+        <h2>🔍 Tra Cứu Trạng Thái Đơn Hàng</h2>
+        <form method="GET">
+            <input type="text" name="code" placeholder="Nhập mã đơn (Ví dụ: LC-A1B2C3)" value="{{ searched_code }}" required>
+            <button type="submit" class="btn">Tra Cứu</button>
+        </form>
+
+        {% if searched_code %}
+            <div class="result">
+                {% if order %}
+                    <p><strong>Mã đơn:</strong> {{ order.order_code }}</p>
+                    <p><strong>Khách hàng:</strong> {{ order.customer_name }}</p>
+                    <p><strong>Tổng tiền:</strong> {{ order.total_amount }} đ</p>
+                    <p><strong>Trạng thái:</strong> <span class="status">{{ order.get_status_display }}</span></p>
+                    <p style="font-size: 13px; color: #666;">Ghi chú: {{ order.note }}</p>
+                {% else %}
+                    <p style="color: red;">Không tìm thấy đơn hàng với mã "{{ searched_code }}". Vui lòng kiểm tra lại!</p>
+                {% endif %}
+            </div>
+        {% endif %}
+        <br>
+        <a href="{% url 'home' %}">⬅️ Về trang chủ mua bánh</a>
+    </div>
+</body>
+</html>

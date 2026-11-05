@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Đặt Hàng Thành Công - Leila Cake</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #fff5f8; text-align: center; padding: 20px; }
+        .card { max-width: 450px; margin: 0 auto; background: white; padding: 25px; border-radius: 12px; box-shadow: 0 4px 10px rgba(0,0,0,0.1); }
+        .code { font-size: 24px; color: #ff4d94; font-weight: bold; background: #ffe6f0; padding: 5px 10px; border-radius: 5px; }
+        .qr-img { width: 250px; height: 250px; margin: 15px 0; border: 1px solid #ddd; border-radius: 8px; }
+    </style>
+</head>
+<body>
+    <div class="card">
+        <h1>🎉 Cảm Ơn Bạn Đã Đặt Bánh!</h1>
+        <p>Mã đơn hàng của bạn là:</p>
+        <span class="code">{{ order.order_code }}</span>
+
+        <p style="margin-top: 15px;">Quét mã VietQR dưới đây để thanh toán tại quán:</p>
+        <img src="{{ qr_url }}" alt="Mã QR VietQR Thanh Toán" class="qr-img">
+
+        <p><strong>Khách hàng:</strong> {{ order.customer_name }} - {{ order.customer_phone }}</p>
+        <p><strong>Tổng tiền:</strong> {{ order.total_amount }} đ</p>
+        <p style="color: #666; font-size: 13px;">Hẹn gặp bạn tại 136 Thoại Ngọc Hầu!</p>
+        <a href="{% url 'home' %}">Quay về trang chủ</a>
+    </div>
+</body>
+</html>

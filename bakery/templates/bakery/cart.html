@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <title>Giỏ Hàng - Leila Cake</title>
+    <style>
+        body { font-family: Arial, sans-serif; background: #fff5f8; padding: 20px; }
+        .container { max-width: 650px; margin: 0 auto; background: white; padding: 25px; border-radius: 10px; box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+        table { width: 100%; border-collapse: collapse; margin-bottom: 20px; }
+        th, td { padding: 12px; border-bottom: 1px solid #ddd; text-align: left; vertical-align: middle; }
+        .btn { background: #ff4d94; color: white; padding: 8px 15px; text-decoration: none; border-radius: 5px; display: inline-block; font-weight: bold; }
+        .btn:hover { background: #e6005c; }
+        .btn-danger { background: #ff3333; padding: 5px 10px; font-size: 13px; }
+        .qty-btn { display: inline-block; width: 25px; height: 25px; background: #eee; color: #333; text-align: center; line-height: 25px; text-decoration: none; font-weight: bold; border-radius: 4px; margin: 0 5px; }
+        .qty-btn:hover { background: #ff4d94; color: white; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>🎂 Giỏ Hàng Của Bạn</h2>
+        {% if cart_items %}
+            <table>
+                <tr>
+                    <th>Bánh</th>
+                    <th>Số lượng</th>
+                    <th>Thành tiền</th>
+                    <th>Thao tác</th>
+                </tr>
+                {% for item in cart_items %}
+                <tr>
+                    <td><strong>{{ item.product.name }}</strong></td>
+                    <td>
+                        <!-- Nút giảm (-) -->
+                        <a href="{% url 'update_cart' item.product.id %}?action=decrease" class="qty-btn">-</a>
+                        <span style="font-weight: bold; display: inline-block; width: 20px; text-align: center;">{{ item.quantity }}</span>
+                        <!-- Nút tăng (+) -->
+                        <a href="{% url 'update_cart' item.product.id %}?action=increase" class="qty-btn">+</a>
+                    </td>
+                    <td style="color: #e6005c; font-weight: bold;">{{ item.total_price }} đ</td>
+                    <td>
+                        <a href="{% url 'remove_from_cart' item.product.id %}" class="btn btn-danger">Xóa</a>
+                    </td>
+                </tr>
+                {% endfor %}
+            </table>
+
+            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+                <h3>Tổng tiền giỏ hàng:</h3>
+                <h3 style="color: #e6005c; font-size: 22px;">{{ total_price }} đ</h3>
+            </div>
+
+            <div style="display: flex; justify-content: space-between;">
+                <a href="{% url 'home' %}" style="color: #666; text-decoration: none; line-height: 40px;">⬅️ Chọn thêm bánh khác</a>
+                <a href="{% url 'checkout' %}" class="btn">Tiến Hành Đặt Hàng ➔</a>
+            </div>
+        {% else %}
+            <p>Giỏ hàng của bạn đang trống.</p>
+            <br>
+            <a href="{% url 'home' %}" class="btn">Quay lại mua bánh</a>
+        {% endif %}
+    </div>
+</body>
+</html>
